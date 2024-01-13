@@ -1,6 +1,17 @@
 CheckList for the express project initial setup
 - [ ] Git setup
-
+- [ ] Node Version managager setup
+- [ ] Node js Project setup
+- [ ] Typescript setup
+- [ ] Prettier setup
+- [ ] Eslint setup
+- [ ] Git hooks setup
+- [ ] Application config setup
+- [ ] Express app setup
+- [ ] Logger setup
+- [ ] Error handline setup
+- [ ] tests setup
+- [ ] create template
 
 ## About git and Setup
 > **Advantage of git**
