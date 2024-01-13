@@ -1,5 +1,5 @@
 function getinto(name: string) {
-    return name
+    return name;
 }
 
-getinto('Gautam')
+getinto("hello");
