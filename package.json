@@ -18,7 +18,14 @@
     "devDependencies": {
         "@types/node": "^20.11.0",
         "husky": "^8.0.3",
+        "lint-staged": "^15.2.0",
         "prettier": "3.2.1",
         "typescript": "^5.3.3"
+    },
+    "lint-staged": {
+        "*.ts": [
+            "npm run lint:fix",
+            "npm run format:fix"
+        ]
     }
 }

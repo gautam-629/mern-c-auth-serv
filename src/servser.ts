@@ -1,2 +1,5 @@
+function getinto(name: string) {
+    return name
+}
 
-console.log("Binod")
+getinto('Binod')
