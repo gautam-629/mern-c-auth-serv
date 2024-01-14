@@ -1,17 +1,14 @@
 import express, { NextFunction, Request, Response } from "express";
 import { HttpError } from "http-errors";
 import logger from "./config/logger";
-
+import authRouter from "./routes/auth";
 const app = express();
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
-app.get("/", async (req, res) => {
-    //   const err=createError(401,"you are not allowed to access this page")
-
-    //     return next(err)
-
-    res.status(201).send("Created");
+app.get("/", (req: Request, res: Response) => {
+    res.status(201).send("world");
 });
+
+app.use("/auth", authRouter);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: HttpError, req: Request, res: Response, next: NextFunction) => {
