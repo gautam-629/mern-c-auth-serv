@@ -1,0 +1,70 @@
+1.docker --version
+2.ctr+l = clean screen
+3.docker run hello-world
+4.Delete container
+i.docker ps -a  // lis all docker container
+ii.docker stop id or container_name // stop
+iii.docker rm id or container_name  // Delete container
+
+// Delete all stop container
+i.docker container prune
+ii.docker image prune
+
+
+5.build docker image 
+=>docker build -t ecommerce-image .    // -t for giving image name and . is a dockerfile path and ecommerce-image is a name of this images
+
+6.list of image
+=>docker image ls
+
+6.make container and run
+=>docker run --name ecommerce-container --rm ecommerce-image // --rm clean old container,which make safe from conflict
+                                                             // --name ecommerce-container is a containe name of the image
+//port mapping(React js)
+=>docker run --rm --name ecommerce-container -d -p 3000:3000 ecommerce-image  // -d detach mode(hide in terminal) -p port mapping
+
+=>docker run --rm --name ecommerce-container -p 3000:3000 ecommerce-image // -it non-detch mode
+
+=>docker run --rm --name ecommerce-container -p 3000:3000 -v "$(pwd)":/app ecommerce-image // -v "$(pwd)":/app 
+
+# if hot loading not working
+=>docker run --rm --name ecommerce-container -e CHOKIDAR_USEPOLLING=true -p 3000:3000 -v "$(pwd)":/app ecommerce-image
+
+#for detail docker-container
+=>docker logs ecommerce-container       // ecommerce-container=> docker name
+
+#under the docker container
+=>docker exec -it a92abdb7d372  sh // a92abdb7d372  is the docker container id and exit for exit container
+
+/////////////////////////////////////////(express js)
+1. build image
+=>docker build -t express-docker-image .
+2.build container
+=>docker run --rm -d -p 5000:5000 --name express-docker-container express-docker-image
+3.hot loading
+=>docker run --rm -d -p 5000:5000 -v "$(pwd)":/app --name express-docker-container express-docker-image //  -v "$(pwd)":/app for hot loading
+docker run --rm -d -p 5000:5000 -v pwd:/app --name express-docker-container express-docker-image 
+
+
+//////////////////////////////////////////(mongodb)
+
+
+//mern-compose
+1. create and start
+i. docker-compose -f docker-compose.dev.yml up -d --build
+
+docker-compose -f docker-compose.dev.yml up --build
+
+
+
+docker build -t auth-service:dev -f docker/development/Dockerfile .
+
+docker run --rm -it -v "$(pwd)":/usr/src/app -v /usr/src/app/node_modules --env-file "$(pwd)"/.env -p 5501:5501 -e NODE_ENV=development auth-service:dev
+
+docker run --rm -it -v "$(PWD):/usr/src/app" -v /usr/src/app/node_modules --env-file "$(PWD)/.env" -p 5501:5501 -e NODE_ENV=development auth-service:dev
+
+
+
+
+https://codersgyan.notion.site/Containerisation-Express-app-ecd8f3c5acf446629acdc67cff4ca55f
+https://codersgyan.notion.site/Setting-up-PostgreSQL-in-a-Docker-Container-with-Persistent-Volume-58711388eb244c9fa1597d87783e3f92
