@@ -14,10 +14,10 @@ const userService = new UserService(userRepository);
 
 const authController = new AuthController(userService, logger);
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
 router.post(
     "/register",
     registerValidators,
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     (req: Request, res: Response, next: NextFunction) =>
         authController.register(req, res, next),
 );
