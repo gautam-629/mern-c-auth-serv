@@ -20,5 +20,4 @@ const startServer = async () => {
     }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
-startServer();
+void startServer();
