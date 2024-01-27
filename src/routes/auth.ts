@@ -1,4 +1,9 @@
-import express, { NextFunction, Request, Response } from "express";
+import express, {
+    NextFunction,
+    Request,
+    RequestHandler,
+    Response,
+} from "express";
 import { AuthController } from "../controllers/AuthController";
 import { UserService } from "../services/UserService";
 import { AppDataSource } from "../config/data-source";
@@ -9,6 +14,8 @@ import { TokenService } from "../services/TokenService";
 import { RefreshToken } from "../entity/RefreshToken";
 import loginValidators from "../validators/login-validators";
 import { CredentialService } from "../services/CredentialService";
+import authenticate from "../middlewares/authenticate";
+import { AuthRequest } from "../types";
 
 const router = express.Router();
 
@@ -24,13 +31,13 @@ const authController = new AuthController(
     credentialService,
 );
 
-router.post(
-    "/register",
-    registerValidators,
-    // eslint-disable-next-line @typescript-eslint/no-misused-promises
-    (req: Request, res: Response, next: NextFunction) =>
-        authController.register(req, res, next),
-);
+router.post("/register", registerValidators, (async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+) => {
+    await authController.register(req, res, next);
+}) as RequestHandler);
 
 router.post(
     "/login",
@@ -38,6 +45,16 @@ router.post(
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     (req: Request, res: Response, next: NextFunction) =>
         authController.login(req, res, next),
+);
+
+router.get(
+    "/self",
+    authenticate as RequestHandler,
+    (req: Request, res: Response) =>
+        authController.self(
+            req as AuthRequest,
+            res,
+        ) as unknown as RequestHandler,
 );
 
 export default router;
