@@ -14,6 +14,9 @@ export interface RegisterUserRequest extends Request {
 export interface LoginUserRequest extends Request {
     body: UserData;
 }
+export interface IRefreshTokenPayload {
+    id: string;
+}
 
 export type AuthCookie = {
     accessToken: string;
