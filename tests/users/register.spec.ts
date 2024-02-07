@@ -13,8 +13,6 @@ describe("POST /auth/register", () => {
 
     beforeAll(async () => {
         connection = await AppDataSource.initialize();
-
-        //    console.log("Connection", connection)
     });
 
     beforeEach(async () => {
@@ -218,8 +216,6 @@ describe("POST /auth/register", () => {
 
             expect(accessToken).not.toBeNull();
             expect(refreshToken).not.toBeNull();
-
-            console.log(accessToken);
 
             expect(isJwt(accessToken)).toBeTruthy();
             expect(isJwt(refreshToken)).toBeTruthy();

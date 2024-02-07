@@ -30,3 +30,12 @@ export interface AuthRequest extends Request {
         id?: string;
     };
 }
+
+export interface ITenant {
+    name: string;
+    address: string;
+}
+
+export interface createTenantRequest extends Request {
+    body: ITenant;
+}

@@ -67,7 +67,6 @@ describe("POST /auth/self", () => {
                 .set("Cookie", [`accessToken=${accessToken}`])
                 .send();
 
-            console.log(response.body, "Response body");
             // Assert
             // Check if user id matches with registered user
             expect((response.body as Record<string, string>).id).toBe(data.id);
