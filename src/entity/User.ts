@@ -17,12 +17,12 @@ export class User {
 
     // @Column({select:false})
     // password: string;
-    @Column()
+    @Column({ select: false })
     password: string;
 
     @Column()
     role: string;
 
     @ManyToOne(() => Tenant)
-    tenant: Tenant;
+    tenant: Tenant | null;
 }

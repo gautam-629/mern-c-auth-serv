@@ -29,12 +29,11 @@ describe("POST /auth/login", () => {
             const userData = {
                 firstName: "Rakesh",
                 lastName: "K",
-                email: "rakesh@mern.space",
-                password: "password",
+                email: "gautambinod629@gmail.com",
+                password: "secret5555555555555",
             };
 
             const hashedPassword = await bcrypt.hash(userData.password, 10);
-
             const userRepository = connection.getRepository(User);
             await userRepository.save({
                 ...userData,

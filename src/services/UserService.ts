@@ -1,13 +1,20 @@
 import { Repository } from "typeorm";
 import { User } from "../entity/User";
-import { UserData } from "../types";
+import { LimitedUserData, UserData } from "../types";
 import createHttpError from "http-errors";
-import { Roles } from "../constants";
+
 import bcrypt from "bcryptjs";
 export class UserService {
     constructor(private userRepository: Repository<User>) {}
 
-    async create({ firstName, lastName, email, password }: UserData) {
+    async create({
+        firstName,
+        lastName,
+        email,
+        password,
+        role,
+        tenandId,
+    }: UserData) {
         const user = await this.userRepository.findOne({
             where: { email: email },
         });
@@ -25,7 +32,8 @@ export class UserService {
                 lastName,
                 email,
                 password: hashedPassword,
-                role: Roles.CUSTOMER,
+                role,
+                tenandId: tenandId ? { id: tenandId } : undefined,
             });
         } catch (error) {
             const err = createHttpError(500, "Fail to store in the datbase");
@@ -40,11 +48,54 @@ export class UserService {
             },
         });
     }
+
+    async findByEmailWithPassword(email: string) {
+        return await this.userRepository.findOne({
+            where: {
+                email,
+            },
+            select: [
+                "id",
+                "firstName",
+                "lastName",
+                "email",
+                "role",
+                "password",
+            ],
+        });
+    }
+
     async findById(id: number) {
         return await this.userRepository.findOne({
             where: {
                 id,
             },
         });
+    }
+
+    async getAll() {
+        return await this.userRepository.find();
+    }
+
+    async update(
+        userId: number,
+        { firstName, lastName, role }: LimitedUserData,
+    ) {
+        try {
+            return await this.userRepository.update(userId, {
+                firstName,
+                lastName,
+                role,
+            });
+        } catch (err) {
+            const error = createHttpError(
+                500,
+                "Failed to update the user in the database",
+            );
+            throw error;
+        }
+    }
+    async deleteById(userId: number) {
+        return await this.userRepository.delete(userId);
     }
 }
