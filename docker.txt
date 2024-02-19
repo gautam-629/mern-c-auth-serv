@@ -12,7 +12,7 @@ ii.docker image prune
 
 
 5.build docker image 
-=>docker build -t ecommerce-image .    // -t for giving image name and . is a dockerfile path and ecommerce-image is a name of this images
+=>docker build -t ecommerce-image .    // -t for giving image name and ecommerce-image is a name of this images
 
 6.list of image
 =>docker image ls
@@ -46,9 +46,9 @@ ii.docker image prune
 docker run --rm -d -p 5000:5000 -v pwd:/app --name express-docker-container express-docker-image 
 
 
-//////////////////////////////////////////(mongodb)
+//////////////////////////////////////////'
 
-
+(mongodb)
 //mern-compose
 1. create and start
 i. docker-compose -f docker-compose.dev.yml up -d --build
@@ -57,9 +57,17 @@ docker-compose -f docker-compose.dev.yml up --build
 
 
 
+
+
 docker build -t auth-service:dev -f docker/development/Dockerfile .
+``````````````````````
+-t flag specifies the name and tag for the image (auth-service:dev in this case).
+The -f flag specifies the Dockerfile to use for building the image 
+When you run docker build -t auth-service:dev -f docker/development/Dockerfile ., the . at the end of the command indicates that the current directory is the build context. This means that all the files and directories in the current directory (and its subdirectories) will be sent to the Docker daemon for building the Docker image.
+````````````````````
 
 docker run --rm -it -v "$(pwd)":/usr/src/app -v /usr/src/app/node_modules --env-file "$(pwd)"/.env -p 5501:5501 -e NODE_ENV=development auth-service:dev
+
 
 docker run --rm -it -v "$(PWD):/usr/src/app" -v /usr/src/app/node_modules --env-file "$(PWD)/.env" -p 5501:5501 -e NODE_ENV=development auth-service:dev
 
@@ -83,3 +91,7 @@ npm run migration:generate -- src/migration/migration -d src/config/data-source.
 
 //for sync migration
 npm run migration:run -- -d src/config/data-source.ts
+
+
+
+NODE_ENV=dev node src/server.js
