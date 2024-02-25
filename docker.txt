@@ -75,6 +75,7 @@ docker run --rm -it -v "$(PWD):/usr/src/app" -v /usr/src/app/node_modules --env-
 
 
 https://codersgyan.notion.site/Containerisation-Express-app-ecd8f3c5acf446629acdc67cff4ca55f
+
 https://codersgyan.notion.site/Setting-up-PostgreSQL-in-a-Docker-Container-with-Persistent-Volume-58711388eb244c9fa1597d87783e3f92
 
 
@@ -94,4 +95,15 @@ npm run migration:run -- -d src/config/data-source.ts
 
 
 
-NODE_ENV=dev node src/server.js
+
+3r(Q?x,uR#@CQu%
+supabase.com
+
+f6db198156769e23fef0b45d12154286d00b4d9e
+SONAR CLOUD
+
+dckr_pat_zwTiawes7O3Hx9n3LTJHzrn6SR0
+dockerhub
+
+
+(github action)
