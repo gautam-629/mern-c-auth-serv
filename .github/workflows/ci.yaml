@@ -1,5 +1,5 @@
 name: CI
-on: ubuntu-latest
+on:
     pull_request:
         branches:
             - main
