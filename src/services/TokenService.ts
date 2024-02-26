@@ -13,6 +13,13 @@ export class TokenService {
     //         privateKey = fs.readFileSync(
     //             path.join(__dirname, "../../certs/private.pem"),
     //         );
+    //         const accessToken = sign(payload, privateKey, {
+    //             algorithm: "RS256",
+    //             expiresIn: "1h",
+    //             issuer: "auth-service",
+    //         });
+
+    //         return accessToken;
     //     } catch (err) {
     //         const error = createHttpError(
     //             500,
@@ -21,6 +28,7 @@ export class TokenService {
     //         throw error;
     //         return;
     //     }
+    // }
 
     generateAccessToken(payload: JwtPayload) {
         let privateKey: string;
