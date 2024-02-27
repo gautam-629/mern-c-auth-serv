@@ -61,7 +61,7 @@ describe("POST /users", () => {
 
             expect(users).toHaveLength(1);
             expect(users[0].email).toBe(userData.email);
-        }, 10000);
+        });
 
         it("should create a manager user", async () => {
             // Create tenant
