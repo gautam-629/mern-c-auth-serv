@@ -12,7 +12,7 @@ describe("POST /auth/self", () => {
     let connection: DataSource;
     let jwks: ReturnType<typeof createJWKSMock>;
     beforeAll(async () => {
-        jwks = createJWKSMock("http://localhost:5501");
+        jwks = createJWKSMock("http://localhost:5502");
         connection = await AppDataSource.initialize();
     });
 
