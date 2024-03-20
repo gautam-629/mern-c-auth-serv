@@ -14,6 +14,7 @@ import { canAccess } from "../middlewares/canAccess";
 import { Roles } from "../constants";
 import createUserValidator from "../validators/create-user-validator";
 import logger from "../config/logger";
+import listUsersValidator from "../validators/list-users-validator";
 
 const router = express.Router();
 
@@ -34,6 +35,7 @@ router.get(
     "/",
     authenticate as RequestHandler,
     canAccess([Roles.ADMIN]),
+    listUsersValidator,
     (req: Request, res: Response, next: NextFunction) =>
         userController.getAll(req, res, next) as unknown as RequestHandler,
 );

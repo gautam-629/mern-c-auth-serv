@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { UserService } from "../services/UserService";
-import { ICreateUserRequest } from "../types";
-import { validationResult } from "express-validator";
+import { ICreateUserRequest, UserQueryParams } from "../types";
+import { validationResult, matchedData } from "express-validator";
 import createHttpError from "http-errors";
 import { Logger } from "winston";
 
@@ -20,6 +20,7 @@ export class UserController {
 
         const { firstName, lastName, email, password, role, tenandId } =
             req.body;
+
         try {
             const user = await this.userService.create({
                 firstName,
@@ -38,9 +39,17 @@ export class UserController {
 
     async getAll(req: Request, res: Response, next: NextFunction) {
         try {
-            const users = await this.userService.getAll();
+            const validatedQuery = matchedData(req, { onlyValidData: true });
+            const [users, count] = await this.userService.getAll(
+                validatedQuery as UserQueryParams,
+            );
             this.logger.info("All users have been fetched");
-            res.json(users);
+            res.json({
+                currentPage: validatedQuery.currentPage as number,
+                perPage: validatedQuery.perPage as number,
+                total: count,
+                data: users,
+            });
         } catch (err) {
             next(err);
         }
