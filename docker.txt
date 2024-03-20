@@ -100,7 +100,7 @@ npm run migration:run -- -d src/config/data-source.ts
 supabase.com
 
 f6db198156769e23fef0b45d12154286d00b4d9e
-SONAR CLOUD
+SONAR source
 
 dckr_pat_zwTiawes7O3Hx9n3LTJHzrn6SR0
 dockerhub
