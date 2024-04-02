@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { UserService } from "../services/UserService";
-import { ICreateUserRequest } from "../types";
-import { validationResult } from "express-validator";
+import { ICreateUserRequest, UserQueryParams } from "../types";
+import { validationResult, matchedData } from "express-validator";
 import createHttpError from "http-errors";
 import { Logger } from "winston";
 
@@ -18,8 +18,9 @@ export class UserController {
             return next(createHttpError(400, result.array()));
         }
 
-        const { firstName, lastName, email, password, role, tenandId } =
+        const { firstName, lastName, email, password, role, tenantId } =
             req.body;
+
         try {
             const user = await this.userService.create({
                 firstName,
@@ -27,7 +28,7 @@ export class UserController {
                 email,
                 password,
                 role,
-                tenandId,
+                tenantId,
             });
 
             res.status(201).json({ id: user.id });
@@ -38,9 +39,17 @@ export class UserController {
 
     async getAll(req: Request, res: Response, next: NextFunction) {
         try {
-            const users = await this.userService.getAll();
+            const validatedQuery = matchedData(req, { onlyValidData: true });
+            const [users, count] = await this.userService.getAll(
+                validatedQuery as UserQueryParams,
+            );
             this.logger.info("All users have been fetched");
-            res.json(users);
+            res.json({
+                currentPage: validatedQuery.currentPage as number,
+                perPage: validatedQuery.perPage as number,
+                total: count,
+                data: users,
+            });
         } catch (err) {
             next(err);
         }
@@ -72,7 +81,7 @@ export class UserController {
         // In our project: We are not allowing user to change the email id since it is used as username
         // In our project: We are not allowing admin user to change others password
 
-        const { firstName, lastName, role } = req.body;
+        const { firstName, lastName, role, email, tenantId } = req.body;
         const userId = req.params.id;
 
         if (isNaN(Number(userId))) {
@@ -87,6 +96,8 @@ export class UserController {
                 firstName,
                 lastName,
                 role,
+                email,
+                tenantId,
             });
 
             this.logger.info("User has been updated", { id: userId });
