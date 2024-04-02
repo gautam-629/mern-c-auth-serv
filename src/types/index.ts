@@ -6,7 +6,7 @@ export interface UserData {
     email: string;
     password: string;
     role: string;
-    tenandId?: number;
+    tenantId?: number;
 }
 
 export interface RegisterUserRequest extends Request {
@@ -50,9 +50,13 @@ export interface LimitedUserData {
     firstName: string;
     lastName: string;
     role: string;
+    email: string;
+    tenantId?: number;
 }
 
 export interface UserQueryParams {
     perPage: number;
     currentPage: number;
+    q: string;
+    role: string;
 }

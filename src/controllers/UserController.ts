@@ -18,7 +18,7 @@ export class UserController {
             return next(createHttpError(400, result.array()));
         }
 
-        const { firstName, lastName, email, password, role, tenandId } =
+        const { firstName, lastName, email, password, role, tenantId } =
             req.body;
 
         try {
@@ -28,7 +28,7 @@ export class UserController {
                 email,
                 password,
                 role,
-                tenandId,
+                tenantId,
             });
 
             res.status(201).json({ id: user.id });
@@ -81,7 +81,7 @@ export class UserController {
         // In our project: We are not allowing user to change the email id since it is used as username
         // In our project: We are not allowing admin user to change others password
 
-        const { firstName, lastName, role } = req.body;
+        const { firstName, lastName, role, email, tenantId } = req.body;
         const userId = req.params.id;
 
         if (isNaN(Number(userId))) {
@@ -96,6 +96,8 @@ export class UserController {
                 firstName,
                 lastName,
                 role,
+                email,
+                tenantId,
             });
 
             this.logger.info("User has been updated", { id: userId });

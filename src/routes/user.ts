@@ -15,6 +15,7 @@ import { Roles } from "../constants";
 import createUserValidator from "../validators/create-user-validator";
 import logger from "../config/logger";
 import listUsersValidator from "../validators/list-users-validator";
+import updateUserValidator from "../validators/update-user-validator";
 
 const router = express.Router();
 
@@ -52,6 +53,7 @@ router.patch(
     "/:id",
     authenticate as RequestHandler,
     canAccess([Roles.ADMIN]),
+    updateUserValidator,
     (req: Request, res: Response, next: NextFunction) =>
         userController.update(req, res, next) as unknown as RequestHandler,
 );
